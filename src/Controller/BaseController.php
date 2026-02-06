@@ -20,6 +20,7 @@ final class BaseController extends AbstractController
             
         ]);
     }
+    
     #[Route('/categorie', name: 'app_categorie')]
     public function categorie(Request $request, EntityManagerInterface $em): Response
     {
