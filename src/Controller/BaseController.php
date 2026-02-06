@@ -15,4 +15,11 @@ final class BaseController extends AbstractController
             
         ]);
     }
+    #[Route('/categorie', name: 'app_categorie')]
+    public function categorie(): Response
+    {
+        return $this->render('base/categorie.html.twig', [
+
+        ]);
+    }
 }
