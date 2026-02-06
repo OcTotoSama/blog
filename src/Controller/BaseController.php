@@ -5,26 +5,23 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-<<<<<<< HEAD
 //use App\Form\Commentaire;
 use App\Form\CommentaireType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Commentaire;
 use Doctrine\ORM\EntityManagerInterface;
-=======
 
 use App\Form\CategorieType;
 use App\Entity\Categorie;
 
 use App\Form\ArticleType;
 use App\Entity\Article; 
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 
 
 
->>>>>>> 4ebb35f5985c9086afce444f4adb09d419bfed24
+
+
 final class BaseController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
@@ -34,30 +31,26 @@ final class BaseController extends AbstractController
             
         ]);
     }
-<<<<<<< HEAD
     #[Route('/commentaire', name: 'app_commentaire')]
-public function commentaire(Request $request,EntityManagerInterface $em): Response
-{
-    $contact = new Commentaire();
-$form = $this->createForm(CommentaireType::class,$commentaire);
-if($request->isMethod('POST')){
+    public function commentaire(Request $request,EntityManagerInterface $em): Response
+    {
+    $commentaire = new Commentaire();
+    $form = $this->createForm(CommentaireType::class,$commentaire);
+    if($request->isMethod('POST')){
     $form->handleRequest($request);
     if ($form->isSubmitted()&&$form->isValid()){
-        $em->persist($contact);
+        $em->persist($commentaire);
           $em->flush();
         $this->addFlash('notice','Message envoyé');
-        return $this->redirectToRoute('app_contact');
-    }
-}
+        return $this->redirectToRoute('app_commentaire');
+        
+    }}
+
+    return $this->render('base/commentaire.html.twig', [
+        'form' => $form->createView()
+        ]);}
     
 
-return $this->render('base/commentaire.html.twig', [
-'form' => $form->createView()
-]);
-}
-}
-=======
-    
     #[Route('/categorie', name: 'app_categorie')]
     public function categorie(Request $request, EntityManagerInterface $em): Response
     {
@@ -103,5 +96,9 @@ return $this->render('base/commentaire.html.twig', [
 
 
 
+
 }
->>>>>>> 4ebb35f5985c9086afce444f4adb09d419bfed24
+    
+
+
+
