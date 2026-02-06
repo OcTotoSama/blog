@@ -6,6 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+use App\Form\CategorieType;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Categorie;
+use Doctrine\ORM\EntityManagerInterface;
+
 final class BaseController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
@@ -16,9 +21,22 @@ final class BaseController extends AbstractController
         ]);
     }
     #[Route('/categorie', name: 'app_categorie')]
-    public function categorie(): Response
+    public function categorie(Request $request, EntityManagerInterface $em): Response
     {
+        $categorie = new Categorie();
+        $form = $this->createForm(CategorieType::class,$categorie);
+
+        if($request->isMethod('POST')){
+            $form->handleRequest($request);
+            if ($form->isSubmitted()&&$form->isValid()){
+                $em->persist($categorie);
+                $em->flush();
+                $this->addFlash('notice','Categorie envoyée');
+                return $this->redirectToRoute('app_categorie');
+            }
+        }
         return $this->render('base/categorie.html.twig', [
+            'form'=> $form->createView()
 
         ]);
     }
