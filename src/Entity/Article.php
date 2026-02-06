@@ -24,7 +24,12 @@ class Article
     private ?string $article = null;
 
     #[ORM\Column]
-    private ?int $date = null;
+    private ?\DateTime $date = null;
+
+    #[ORM\Column(length: 30)]
+    private ?string $titre = null;
+
+    
 
     public function getId(): ?int
     {
@@ -67,15 +72,29 @@ class Article
         return $this;
     }
 
-    public function getDate(): ?int
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    public function setDate(int $date): static
+    public function setDate(\DateTime $date): static
     {
         $this->date = $date;
 
         return $this;
     }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): static
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    
 }
